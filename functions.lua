@@ -110,6 +110,8 @@ function log_in()
   end
 end
 
+
+-- renders the homepage
 function render_home()
   update_acount_balence(acount_id)
   os.execute("clear")
@@ -117,15 +119,15 @@ function render_home()
   print("")
   print("Acount ID: " .. acount_id)
   print("")
-  print("Acount balence: $" .. tostring(acount_balence))
+  print("Acount balence: $" .. tostring(acount_balence) .. "                                       " .. current_time())
   print("-------------------------------------------------------------------------------------")
   print("1.Withdrawl")
   print("2.Deposit")
   print("3.List Recent Transactions")
   print("4.Log out")
-  user_input = tostring(io.read())
+  user_input = tostring(io.read()) -- handles the user input
   
-  if user_input == "1" then
+  if user_input == "1" then -- decides what to do with the user input
     withdrawl()
   elseif user_input == "2" then
     deposit()
@@ -136,26 +138,46 @@ function render_home()
   end
 end
 
+-- updates the users balence
 function update_acount_balence(id)
   acount_balence = acount_balences[id]
 end
 
+-- handles when the user wants to withdrawl money
 function withdrawl()
   os.execute("clear")
   print("Withdrawl")
   print("-------------------------------------------------------------------------------------")
   print("How much money would you like to withdrawl?")
   local user_input = io.read()
+  if has_letters(user_input) then -- cheks if the user added leters to thair input
+    os.execute("clear")
+    print("Withdrawl")
+    print("-------------------------------------------------------------------------------------")
+    print("Sorry, we only accept numberd responces.")
+    os.execute("sleep 2")
+    render_home()
+  end
 
-  if tonumber(user_input) > tonumber(acount_balence) then
+  
+  if user_input < 1 then -- checks the user inputed a value more then one
+    os.execute("clear")
+    print("Withdrawl")
+    print("-------------------------------------------------------------------------------------")
+    print("Sorry, you cannot withdtawl less then $1")
+    os.execute("sleep 2")
+    render_home()
+  end
+
+  if tonumber(user_input) > tonumber(acount_balence) then -- makes shur the user is not depositing more than they have
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
     print("Sorry, but you are unable to withdrawl more than you own.")
     render_home()
   else
-    acount_balences[acount_id] = acount_balences[acount_id] - user_input
-    log = log .. "-" .. user_input .. ", "
+    acount_balences[acount_id] = acount_balences[acount_id] - tonumber(user_input) -- updates the table
+    log = log .. "-" .. user_input .. ", " -- updates the log
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
@@ -165,15 +187,34 @@ function withdrawl()
   end
 end
 
+-- handles when the user wants to deposit money
 function deposit()
   os.execute("clear")
   print("Deposit")
   print("-------------------------------------------------------------------------------------")
   print("How much money would you like to deposit?")
   local user_input = io.read()
+  
+  if has_letters(user_input) then -- checks there are no leters in the user input
+    os.execute("clear")
+    print("Deposite")
+    print("-------------------------------------------------------------------------------------")
+    print("Sorry, we only accept numberd responces.")
+    os.execute("sleep 2")
+    render_home()
+  end
+  
+  if tonumber(user_input) < 1 then -- makes shur the users input is not a negetive value
+    os.execute("clear")
+    print("Deposite")
+    print("-------------------------------------------------------------------------------------")
+    print("Sorry, you cannot deposite less then $1")
+    os.execute("sleep 2")
+    render_home()
+  end
 
-  acount_balences[acount_id] = acount_balences[acount_id] + user_input
-  log = log .. "+" .. user_input .. ", "
+  acount_balences[acount_id] = acount_balences[acount_id] + tonumber(user_input) -- updates the table
+  log = log .. "+" .. user_input .. ", " -- updates the log
   os.execute("clear")
   print("Deposite")
   print("-------------------------------------------------------------------------------------")
@@ -182,6 +223,7 @@ function deposit()
   render_home()
 end
 
+-- lists recent transactions
 function list_recent_transactions()
   os.execute("clear")
   print("Log")
@@ -192,11 +234,28 @@ function list_recent_transactions()
   print("")
   print("Press ENTER to return to home")
  
-  user_input = io.read()
+  user_input = io.read() -- waits for the user to press enter to render_home()
   render_home()
 end
 
+-- log out
 function exit()
   os.execute("clear")
   login_page()
+end
+
+-- sees if the input has leters
+function has_letters(input)
+  for i = 1, #input do
+    local char = input:sub(i, i)
+     if char:match("%a") then
+      return true 
+     end
+   end
+   return falsed
+end
+
+-- formats the time and date
+function current_time()
+  return os.date("%Y-%m-%d %H:%M")
 end
