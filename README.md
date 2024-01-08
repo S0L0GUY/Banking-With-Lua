@@ -3,7 +3,8 @@ This simple banking system implemented in Lua allows users to create accounts, l
 
 # Prerequisites
 Lua interpreter
-How to Run
+
+# How to Run
 Save the provided main.lua file to your local machine.
 Ensure you have the Lua interpreter installed.
 Open a terminal or command prompt and navigate to the directory where main.lua is saved.
