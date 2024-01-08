@@ -35,3 +35,9 @@ render_home(): Displays the main menu after login, allowing users to perform var
 withdrawal() and deposit(): Perform withdrawal and deposit transactions, respectively.
 list_recent_transactions(): Displays recent transactions and returns to the main menu.
 exit(): Logs out and returns to the login page.
+
+# Updated Functions in functions.lua
+render_home(): Displays the main menu after login, allowing users to perform various transactions. Now includes a timestamp.
+withdrawal() and deposit(): Perform withdrawal and deposit transactions, respectively. Includes input validation and additional checks.
+has_letters(input): Checks if the input contains letters.
+current_time(): Returns the formatted current date and time.
