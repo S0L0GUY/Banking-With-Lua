@@ -1,4 +1,4 @@
--- creates the neded variadables
+-- Creates the needed variables.
 local user_input = nil
 local position = nil
 usernames = {}
@@ -7,14 +7,14 @@ acount_balences = {}
 acount_balence = 0
 log = ""
 
--- the page generetion and macanics for the login page
+-- The page generation and mechanics for the login page.
 function login_page()
-  print("1. Sign up") -- questions the user
+  print("1. Sign up") -- Questions the user.
   print("2. Log In")
   local user_input = tonumber(io.read())
   os.execute("clear")
   
-  if user_input == 1 then --evaluates the response
+  if user_input == 1 then -- Evaluates the response.
     sign_up()
   elseif user_input == 2 then
     log_in()
@@ -26,22 +26,22 @@ function login_page()
   end
 end
 
--- Create a new account
+-- Create a new account.
 function sign_up()
   print("Username:")
   local user_input = io.read()
   local user_input = string.lower(user_input)
   
-  if count_occurrences(usernames, user_input) > 0 then -- checks if the username is already in the program
+  if count_occurrences(usernames, user_input) > 0 then -- Checks if the username is already in the program.
     print("Username already exists. Please choose a different username.")
     os.execute("sleep 2")
     os.execute("clear")
     sign_up()
   else
-    table.insert(usernames, user_input) -- create new login
+    table.insert(usernames, user_input) -- Create a new login.
     table.insert(acount_balences, 0)
     update_acount_balence(acount_id)
-    local position = find_item_position(usernames, user_input) -- gets account pos && id
+    local position = find_item_position(usernames, user_input) -- Gets account position and ID.
     acount_id = position
     os.execute("clear")
     print("Password:")
@@ -49,14 +49,14 @@ function sign_up()
     table.insert(passwords, user_input)
     os.execute("clear")
     
-    print("You have been sucsesfully logged in.") -- prints login msg
+    print("You have been sucsesfully logged in.") -- Prints login message.
     os.execute("sleep 2")
     log = ""
     render_home()
   end
 end
 
--- counts if the user is in the tables
+-- Counts if the username is in the tables.
 function count_occurrences(table, value)
     local count = 0
     for _, v in ipairs(table) do
@@ -67,7 +67,7 @@ function count_occurrences(table, value)
     return count
 end
 
--- finds the position of the user/password
+-- Finds the position of the user/password.
 function find_item_position(list, item)
     for i, v in ipairs(list) do
         if v == item then
@@ -78,9 +78,9 @@ function find_item_position(list, item)
 end
 
 
--- log in to the account
+-- Log in to the account.
 function log_in()
-  print("Username:") -- gathers username
+  print("Username:") -- Gathers username.
   local user_input = io.read()
   local user_input = tostring(user_input)
   if not count_occurrences(usernames, user_input) == 1 then
@@ -92,12 +92,12 @@ function log_in()
   acount_id = position
   os.execute("clear")
 
-  print("Password:") -- gathers the password
+  print("Password:") -- Gathers the password.
   local user_input = io.read()
   local user_input = tostring(user_input)
   os.execute("clear")
 
-  if passwords[position] == user_input then -- checks if the username matches the password
+  if passwords[position] == user_input then -- Checks if the username matches the password.
     print("You have been sucsesfully logged in.")
     os.execute("sleep 2")
     log = ""
@@ -111,7 +111,7 @@ function log_in()
 end
 
 
--- renders the homepage
+-- Renders the homepage.
 function render_home()
   update_acount_balence(acount_id)
   os.execute("clear")
@@ -125,9 +125,9 @@ function render_home()
   print("2.Deposit")
   print("3.List Recent Transactions")
   print("4.Log out")
-  user_input = tostring(io.read()) -- handles the user input
+  user_input = tostring(io.read()) -- Handles the user input.
   
-  if user_input == "1" then -- decides what to do with the user input
+  if user_input == "1" then -- Decides what to do with the user input.
     withdrawl()
   elseif user_input == "2" then
     deposit()
@@ -138,19 +138,19 @@ function render_home()
   end
 end
 
--- updates the users balence
+-- Updates the user's balance.
 function update_acount_balence(id)
   acount_balence = acount_balences[id]
 end
 
--- handles when the user wants to withdrawl money
+-- Handles when the user wants to withdraw money.
 function withdrawl()
   os.execute("clear")
   print("Withdrawl")
   print("-------------------------------------------------------------------------------------")
   print("How much money would you like to withdrawl?")
   local user_input = io.read()
-  if has_letters(user_input) then -- cheks if the user added leters to thair input
+  if has_letters(user_input) then -- Checks if the user added letters to their input.
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
@@ -160,7 +160,7 @@ function withdrawl()
   end
 
   
-  if user_input < 1 then -- checks the user inputed a value more then one
+  if user_input < 1 then -- Checks if the user inputted a value more than one.
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
@@ -169,15 +169,15 @@ function withdrawl()
     render_home()
   end
 
-  if tonumber(user_input) > tonumber(acount_balence) then -- makes shur the user is not depositing more than they have
+  if tonumber(user_input) > tonumber(acount_balence) then -- Makes sure the user is not depositing more than they have.
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
     print("Sorry, but you are unable to withdrawl more than you own.")
     render_home()
   else
-    acount_balences[acount_id] = acount_balences[acount_id] - tonumber(user_input) -- updates the table
-    log = log .. "-" .. user_input .. ", " -- updates the log
+    acount_balences[acount_id] = acount_balences[acount_id] - tonumber(user_input) -- Updates the table.
+    log = log .. "-" .. user_input .. ", " -- Updates the log.
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
@@ -187,7 +187,7 @@ function withdrawl()
   end
 end
 
--- handles when the user wants to deposit money
+-- Handles when the user wants to deposit money.
 function deposit()
   os.execute("clear")
   print("Deposit")
@@ -195,7 +195,7 @@ function deposit()
   print("How much money would you like to deposit?")
   local user_input = io.read()
   
-  if has_letters(user_input) then -- checks there are no leters in the user input
+  if has_letters(user_input) then -- Checks there are no letters in the user input.
     os.execute("clear")
     print("Deposite")
     print("-------------------------------------------------------------------------------------")
@@ -204,7 +204,7 @@ function deposit()
     render_home()
   end
   
-  if tonumber(user_input) < 1 then -- makes shur the users input is not a negetive value
+  if tonumber(user_input) < 1 then -- Makes sure the user's input is not a negative value.
     os.execute("clear")
     print("Deposite")
     print("-------------------------------------------------------------------------------------")
@@ -213,8 +213,8 @@ function deposit()
     render_home()
   end
 
-  acount_balences[acount_id] = acount_balences[acount_id] + tonumber(user_input) -- updates the table
-  log = log .. "+" .. user_input .. ", " -- updates the log
+  acount_balences[acount_id] = acount_balences[acount_id] + tonumber(user_input) --Updates the table. 
+  log = log .. "+" .. user_input .. ", " -- Updates the log.
   os.execute("clear")
   print("Deposite")
   print("-------------------------------------------------------------------------------------")
@@ -223,7 +223,7 @@ function deposit()
   render_home()
 end
 
--- lists recent transactions
+-- Lists recent transactions.
 function list_recent_transactions()
   os.execute("clear")
   print("Log")
@@ -234,17 +234,17 @@ function list_recent_transactions()
   print("")
   print("Press ENTER to return to home")
  
-  user_input = io.read() -- waits for the user to press enter to render_home()
+  user_input = io.read() -- Waits for the user to press Enter to render_home().
   render_home()
 end
 
--- log out
+-- Log out.
 function exit()
   os.execute("clear")
   login_page()
 end
 
--- sees if the input has leters
+-- Checks if the input has letters.
 function has_letters(input)
   for i = 1, #input do
     local char = input:sub(i, i)
@@ -255,7 +255,7 @@ function has_letters(input)
    return falsed
 end
 
--- formats the time and date
+-- Formats the time and date.
 function current_time()
   return os.date("%Y-%m-%d %H:%M")
 end
