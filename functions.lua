@@ -160,7 +160,7 @@ function withdrawl()
   end
 
   
-  if user_input < 1 then -- Checks if the user inputted a value more than one.
+  if tonumber(user_input) < 1 then -- Checks if the user inputted a value more than one.
     os.execute("clear")
     print("Withdrawl")
     print("-------------------------------------------------------------------------------------")
