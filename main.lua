@@ -1,6 +1,5 @@
 -- Setup
 require("functions")
-option = nil
 
 -- Main
 print("Welcome...")
